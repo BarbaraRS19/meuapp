@@ -1,82 +1,42 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Button, TextInput} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const App = () => {
-  const [number, onChangeText] = useState('')
-  const[number2, onChangeText2] = useState('')
-  const [resultado, setResultado] = useState('')
-  
-  const soma = function (){
-    setResultado(Number(number) + Number(number2))
-  }
+const App = () =>{
 
-  const subtracao = function (){
-    setResultado(Number(number) - Number(number2) )
-  }
+    const logoDuolingo = 'https://i.pinimg.com/originals/b5/b3/11/b5b311b510298479a0d138beac652e71.png';
 
-  const multiplicacao = function (){
-    setResultado(Number(number) * Number(number2))
-  }
-
-  const divisao = function (){
-    setResultado(Number(number) % Number(number2))
-  }
-
-  return (
-    <View style={styles.container}>
-    <Text>Calculadora!</Text>
-
-<View style={styles.inputContainer}>
-  <br></br><TextInput
-      onChangeText={onChangeText}
-      value={number}
-      placeholder=' Insira um número'
-      keyboardType='numeric'
+return (
+    <View style={styles.imgContainer}>  
+    <LinearGradient
+        colors={['#43C000', 'transparent']}
+        style={styles.background}
       />
-<br></br><TextInput
-      onChangeText={onChangeText2}
-      value={number2}
-      placeholder=' Insira outro número'
-      keyboardType='numeric'
-      />
-</View>
-
-<View style={styles.buttonContainer}>
-      <br></br><Button
-      title='+'
-      onPress={() => soma()}
-      ></Button>
-      <br></br><Button
-      title='-'
-      onPress={() => subtracao()}
-      ></Button>
-      <br></br><Button
-      title='X'
-      onPress={() => multiplicacao()}
-      ></Button>
-      <br></br><Button
-      title='%'
-      onPress={() => divisao()}
-      ></Button>
- </View>
-
-      <br></br><Text>O valor é {resultado}</Text>
+        <Image style={styles.Logo} source={{uri: logoDuolingo, }}/>
     </View>
-  );
-};
-
-const styles = StyleSheet.create({ 
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems:'center'
-  } ,
-  buttonContainer:{
-    flexDirection:'row'
-  },
-  inputContainer:{
-    flexDirection:'row'
-  }
-});
-
+)
+}
 export default App;
+
+const styles = StyleSheet.create({
+    imgContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#8ee000',
+    },
+    Logo: {
+      width: 250,
+      height: 250,
+    },
+    background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    botton: 0,
+    height: 300,
+    }
+
+    }
+  );
