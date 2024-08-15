@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import botao from '../../components/botao';
 
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems:'center'
     } ,
-  });
+  });*/
