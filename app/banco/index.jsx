@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { View, Modal, Button, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TextInput } from 'react-native';
 import Botao from "./Components/botao";
-import Input from "./Components/input";
-import Buttons from "./Components/buttons";
+import Tela from "./Components/modal";
 
 const Banco = () => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [isModalVisible2, setIsModalVisible2] = useState(false);
-    const handleModal = () => setIsModalVisible(() => !isModalVisible);
-    const handleModal2 = () => setIsModalVisible2(() => !isModalVisible2);
     const [saldo, setSaldo] = useState(7320.92);
-    const [resto, setResto] = useState(0);
-   
+    const [resto, setResto] = useState();
+    const [modalVisible, setModalVisible] = useState(false)
+    const [preSaldo, setPreSaldo] = useState(7320.92);
+    
+     const Confirmar = () => {
+        setSaldo(preSaldo)
+        setModalVisible(false)
+     }
+
     const deposito = () => {
         if (resto <= 0) {
             return alert('Não é possível depositar este valor!')
@@ -19,46 +21,34 @@ const Banco = () => {
         const Bonus = 0.01;
         const restante = parseFloat(resto);
         let saldoBonus = restante * Bonus;
-        let novoSaldo = parseFloat(saldo) + (restante + saldoBonus);
-        setSaldo(novoSaldo.toFixed(2));
+        let resultado = parseFloat(saldo) + (restante + saldoBonus);
+        setPreSaldo(resultado.toFixed(2));
+        setModalVisible(!modalVisible)
     }
-   
+
     const saque = () => {
-           if (resto <= 0){
-                return alert('Não é possível sacar este valor!')
-            }
-            const porcentagem = 0.025;
-            const restante = parseFloat(resto);
-            let inicio = parseFloat(saldo) - restante
-            let multa = inicio * porcentagem;
-            let novoSaldo = inicio - multa;
-            setModalVisible(() => !modalVisible);
-            setSaldo(novoSaldo.toFixed(2));
+        setModalVisible(!modalVisible)
+        if (resto <= 0) {
+            return alert('Não é possível sacar este valor!')
         }
-    
+        const porcentagem = 0.025;
+        const restante = parseFloat(resto);
+        let inicio = parseFloat(saldo) - restante
+        let multa = inicio * porcentagem;
+        let resultado = inicio - multa;
+        setPreSaldo(resultado.toFixed(2));
+    }
+
     return (
         <View style={style.bodyContainer}>
-             <Modal isVisible={modalVisible} style={style.modal}>
-                    <View style={style.Container2}>
-                        <Text style={style.title2}>Você não tem dinheiro suficiente</Text>
-                        <Button title="Ok" onPress={() => {handleModal()}} color="black"/>
-                    </View>
-                </Modal>
-                <Modal isVisible={isModalVisible2} style={style.modal}>
-                    <View style={style.container2}>
-                        <Text style={style.title2}>Tem certeza que quer realizar essa transação?</Text>
-                        <Text>Saldo Atual: {saldo}</Text>
-                        <Text>Saldo Final: {resto.toFixed(2)}</Text>
-                        <View style={style.btns}>
-                            <Buttons  
-                                btn1={"Cancelar"}
-                                btn2={"Confirmar"}
-                                press1={() => {handleModal2()}}
-                                press2={() => {setTotal(newVal.toFixed(2)); handleModal2();}}
-                            />
-                        </View>
-                    </View>
-                </Modal>
+            <Tela
+                saldo={saldo}
+                setSaldo={setSaldo}
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+                preSaldo={preSaldo}
+                Confirmar={Confirmar}
+            />
             <Image style={style.imgContainer}
                 source={require('../image/logo.jpg')} />
             <View>
@@ -66,8 +56,10 @@ const Banco = () => {
                 <Text style={style.textoSaldo}>R${saldo}</Text>
                 <Text style={style.texto}>Digite o valor desejado abaixo</Text>
                 <Text style={style.texto}>Selecione a operação que deseja</Text>
-                <Input
-                    onChange={() => {setResto}}
+                <TextInput 
+                    style={style.input}
+                    onChangeText={setResto}
+                    value={resto}
                 />
                 <Botao
                     botao1={"Saque"}
@@ -105,16 +97,9 @@ const style = StyleSheet.create({
         height: 150,
         marginBottom: 30,
     },
-    modal: {
-
-    },
-    modalContainer: {
-
-    },
-    modalText: {
-
-    },
-    button: {
-
-    }
+    input: {
+        border: '1px solid red',
+        marginBottom: 20,
+        marginTop: 20,
+      },
 })
