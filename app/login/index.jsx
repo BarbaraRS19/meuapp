@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {View, Text, StyleSheet, TextInput, Pressable} from "react-native";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Link } from "expo-router";
 
 export default SingUp = () => {
         const [nome, setNome] = useState('');
@@ -54,6 +55,9 @@ export default SingUp = () => {
         <Pressable style={style.button} onPress={Registro}>
         <Text>Concluir</Text>
         </Pressable>
+        <Link href="../" >
+                <br></br><Text>Clique para Voltar!</Text>
+            </Link>
     </View>
     </SafeAreaView>
 }

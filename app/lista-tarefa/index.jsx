@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {View, Text, StyleSheet, FlatList} from "react-native";
+import { Link } from "expo-router";
 
 const styles = StyleSheet.create({
     container: {
@@ -43,6 +44,9 @@ export default listaTarefa = () => {
          </Text>
          </View>}>
         </FlatList>
+        <Link href="../" >
+                <br></br><Text>Clique para Voltar!</Text>
+            </Link>
     </View>
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Picker } from '@react-native-picker/picker';
+import { Link } from "expo-router";
 
 const style = StyleSheet.create({
     container:{
@@ -11,8 +12,8 @@ const style = StyleSheet.create({
         width: '100%',
     },
     picker:{
-    marginBottom: 30,
-    marginTop: 30, 
+    marginBottom: 10,
+    marginTop: 20, 
     border: '2px solid blue',
     color: '#2e4053',
     fontSize: 15,
@@ -20,7 +21,8 @@ const style = StyleSheet.create({
     texto:{
         fontSize: 40,
         color: '#3498db',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: 20,
     },
     picker2: {
         border: '2px solid blue',
@@ -30,16 +32,10 @@ const style = StyleSheet.create({
 })
 
 export default Selecionar = () => {
-    const [pokemon, setPokemon] = useState('')
+    const [pokemon, setSelectedPokemon] = useState('')
     const [pokemons, setPokemons] = useState([])
-    const [type, setType] = useState([])
-    const [selectType, setSelectType] = useState([])
-
-    useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon?limit=100')
-            .then(response => response.json())
-            .then(dados => setPokemons(dados.results))
-    }, [])
+    const [types, setType] = useState([])
+    const [selectType, setSelectType] = useState('')
 
     useEffect(() => {
         fetch('https://pokeapi.co/api/v2/type/')
@@ -50,39 +46,40 @@ export default Selecionar = () => {
 
     useEffect(() => {
         if (selectType) {
-            fetch(`ttps://pokeapi.co/api/v2/type/${selectType}`)
+            fetch(`https://pokeapi.co/api/v2/type/${selectType}`)
                 .then(response => response.json())
-                .then(data => setSelectType(data.results))
+                .then(data => setPokemons(data.pokemon))
                 .catch(error => console.error('Error fetching Pokémon types:', error))
         }
     }, [selectType])
-    console.log(type)
-    return <View style={style.container}>
-        <Text style={style.texto}>Selecione abaixo:  </Text>
-        <Picker
-            selectedValue={pokemon}
-            style={style.picker}
-            onValueChange={(itemValue) => setPokemon(itemValue)}>
-            <Picker.Item label="Selecione um Pokémon" />
-            {pokemons.map((item, index) => (
-                <Picker.Item key={index} label={item.name} value={item.url} />
-            ))}
-        </Picker>
-        {pokemon ? <Text>Você Selecionou: {pokemon}</Text> : ''}
 
-        <Picker
-            selectedValue={type}
-            style={style.picker2}
-            onValueChange={(itemValue) => setType(itemValue)}>
-            <Picker.Item label="Selecione um Tipo" value="" />
-            {type.map((item, index) => (
-                <Picker.Item key={index} label={item.name} value={item.name} />
-            ))}
-        </Picker>
-       
-       <Picker
-       >
 
-       </Picker>
-    </View>
+    return (
+        <View style={style.container}>
+            <Text style={style.texto}>Selecione abaixo:  </Text>
+            <Picker
+                selectedValue={pokemon}
+                style={style.picker}
+                onValueChange={(itemValue) => setSelectedPokemon(itemValue)}>
+                <Picker.Item label="Selecione um Pokémon" />
+                {pokemons.map((item, index) => (
+                    <Picker.Item key={index} label={item.pokemon.name} value={item.pokemon.url} />
+                ))}
+            </Picker>
+            {pokemon ? <Text>Você Selecionou: {pokemon}</Text> : ''}
+
+            <Picker
+                selectedValue={selectType}
+                style={style.picker}
+                onValueChange={(itemValue) => setSelectType(itemValue)}>
+                <Picker.Item label="Selecione um Tipo"/>
+                    {types.map((type, index) => (
+                        <Picker.Item key={index} label={type.name} value={type.name} />
+                    ))}
+            </Picker>
+            <Link href="../" >
+                <br></br><Text>Clique para Voltar!</Text>
+            </Link>
+        </View>
+    )
 }

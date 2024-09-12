@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, Image, TextInput } from 'react-native';
 import Botao from "./Components/botao";
 import Tela from "./Components/modal";
+import {Link} from 'expo-router'
 
 const Banco = () => {
     const [saldo, setSaldo] = useState(7320.92);
     const [resto, setResto] = useState();
     const [modalVisible, setModalVisible] = useState(false)
     const [preSaldo, setPreSaldo] = useState(7320.92);
-    
-     const Confirmar = () => {
+
+    const Confirmar = () => {
         setSaldo(preSaldo)
         setModalVisible(false)
-     }
+    }
 
     const deposito = () => {
         if (resto <= 0) {
@@ -56,7 +57,7 @@ const Banco = () => {
                 <Text style={style.textoSaldo}>R${saldo}</Text>
                 <Text style={style.texto}>Digite o valor desejado abaixo</Text>
                 <Text style={style.texto}>Selecione a operação que deseja</Text>
-                <TextInput 
+                <TextInput
                     style={style.input}
                     onChangeText={setResto}
                     value={resto}
@@ -68,6 +69,11 @@ const Banco = () => {
                     funcao2={() => { deposito() }}
                 />
             </View>
+
+            <Link href="../" >
+                <br></br><Text>Clique para Voltar!</Text>
+            </Link>
+
         </View>
     )
 }
@@ -101,5 +107,5 @@ const style = StyleSheet.create({
         border: '1px solid red',
         marginBottom: 20,
         marginTop: 20,
-      },
+    },
 })

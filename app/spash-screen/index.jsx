@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, Text} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Link } from 'expo-router';
 
 const App = () =>{
 
@@ -13,6 +14,9 @@ return (
         style={styles.background}
       />
         <Image style={styles.Logo} source={{uri: logoDuolingo, }}/>
+        <Link href="../" >
+                <br></br><Text style={styles.text}>Clique para Voltar!</Text>
+            </Link>
     </View>
 )
 }
@@ -36,6 +40,9 @@ const styles = StyleSheet.create({
     top: 0,
     botton: 0,
     height: 300,
+    },
+    text:{
+      color:'white'
     }
 
     }

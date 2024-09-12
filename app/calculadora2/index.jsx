@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native';
+import {Link} from 'expo-router'
 
 const CalculadoraAtual = () => {
   const [input, setInput] = useState('');
@@ -83,6 +84,9 @@ const CalculadoraAtual = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <Link href="../" >
+                <br></br><Text style={styles.text}>Clique para Voltar!</Text>
+            </Link>
     </SafeAreaView>
   );
 };
@@ -108,6 +112,10 @@ const styles = StyleSheet.create({
   },
   texto: {
     fontSize: 50,
+    color: '#F8F8FF',
+  },
+  text: {
+    fontSize: 20,
     color: '#F8F8FF',
   },
   buttonContainer: {
