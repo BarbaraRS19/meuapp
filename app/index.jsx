@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, StyleSheet, Button} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 import { Link } from 'expo-router'
 
 const styles = StyleSheet.create({
@@ -41,5 +41,6 @@ export default listaExercicio = () => {
     <Link style={styles.link} href="/login"> -Login </Link>
     <Link style={styles.link} href="/pokemon"> -Pokémon </Link>
     <Link style={styles.link} href="/spash-screen"> -Duolingo </Link>
+    <Link style={styles.link} href="/sobre-mim"> -Sobre mim </Link>
     </View>
 }
