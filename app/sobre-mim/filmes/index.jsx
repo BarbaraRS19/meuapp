@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, StyleSheet, ScrollView, Pressable, Image} from "react-native";
+import {Text, StyleSheet, ScrollView, Pressable, Image} from "react-native";
 import { Link } from 'expo-router'
 import Header from "../../../components/header";
 
@@ -51,30 +51,73 @@ const styles = StyleSheet.create({
 export default Filmes = () => {
     return  <ScrollView style={styles.container}>
         <Header titulo="Meus Filmes e Séries Favoritos"/>
+
+        <Link style={styles.imgContainer}
+        href={{
+                pathname: `sobre-mim/detalhe/FestanoCéu`,
+                params: {'filme': ('FestanoCéu', '16 de outubro de 2014')}
+        }}>
         <Image style={styles.imgContainer}
                 source={require('../../image/festa.jpg')} />
+        </Link>
         <Text style={styles.texto1}>Festa no Céu</Text>
         <Text style={styles.texto2}>16 de outubro de 2014</Text>
+        
+        <Link style={styles.imgContainer}
+        href={{
+                pathname: `sobre-mim/detalhe2/HotelTransylvania`,
+                params: {'filme': ('Hotel Transylvania', '16 de outubro de 2014')}
+        }}>
         <Image style={styles.imgContainer}
                 source={require('../../image/hotel.jpg')} />
+        </Link>
         <Text style={styles.texto1}>Hotel Transylvania</Text>
         <Text style={styles.texto2}>5 de outubro de 2012</Text>
+
+        <Link style={styles.imgContainer}
+        href={{
+                pathname: `sobre-mim/detalhe3/rapunzel`,
+                params: {'filme': ('Enrolados', '7 de janeiro de 2011')}
+        }}>
         <Image style={styles.imgContainer}
                 source={require('../../image/rapunzel.jpg')} />
+        </Link>
         <Text style={styles.texto1}>Enrolados</Text>
         <Text style={styles.texto2}>7 de janeiro de 2011</Text>
+
+        <Link style={styles.imgContainer}
+        href={{
+                pathname: `sobre-mim/detalhe4/OnedayataTime`,
+                params: {'filme': ('One Day At A Time', '2017 - 2020')}
+        }}>
         <Image style={styles.imgContainer}
                 source={require('../../image/one.jpg')} />
+        </Link>
         <Text style={styles.texto1}>One Day At A Time</Text>
         <Text style={styles.texto2}>2017 - 2020</Text>
+
+        <Link style={styles.imgContainer}
+        href={{
+                pathname: `sobre-mim/detalhe5/Youngsheldon`,
+                params: {'filme': ('Young Sheldon', '2017 - 2024')}
+        }}>
         <Image style={styles.imgContainer}
                 source={require('../../image/sheldon.jpg')} />
+        </Link>
         <Text style={styles.texto1}>Young Sheldon</Text>
         <Text style={styles.texto2}>2017 - 2024</Text>
+
+        <Link style={styles.imgContainer}
+        href={{
+                pathname: `sobre-mim/detalhe6/Thebigbangtheory`,
+                params: {'filme': ('The BigBang Theory', '2007 - 2019')}
+        }}>
         <Image style={styles.imgContainer}
                 source={require('../../image/big.jpg')} />
+        </Link>
         <Text style={styles.texto1}>The BigBang Theory</Text>
         <Text style={styles.texto2}>2007 - 2019</Text>
+
         <Link href="/sobre-mim" asChild>
       <Pressable>
         <Text style={styles.butt}>Volte à página inicial!</Text>
