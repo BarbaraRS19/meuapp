@@ -42,5 +42,6 @@ export default listaExercicio = () => {
     <Link style={styles.link} href="/pokemon"> -Pokémon </Link>
     <Link style={styles.link} href="/spash-screen"> -Duolingo </Link>
     <Link style={styles.link} href="/sobre-mim"> -Sobre mim </Link>
+    <Link style={styles.link} href="/iFome"> -iFome </Link>
     </View>
 }
