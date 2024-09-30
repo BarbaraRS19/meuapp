@@ -38,6 +38,7 @@ export default functionee = () =>{
         <Text style={style.compra}>Finalizar compra</Text>
         </Pressable>
         </View>
+        
     )
 }
 
