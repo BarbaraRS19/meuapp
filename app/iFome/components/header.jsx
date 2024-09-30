@@ -1,26 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Header = ({ }) => {
+const Header = () => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>iFome</Text>
+        <View style={styles.view}>
+            <Text style={styles.texto}>iFome - Mini Kalzone</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#ff0000',
-        flexDirection: 'row',
+    view: {
+        backgroundColor: 'red',
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 15,
-        height: 50
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        height: 45,
+        marginBottom: 20,
     },
-    text: {
-        fontSize: 20,
+    texto: {
+        fontSize: 25,
         color: 'white',
     },
 });
