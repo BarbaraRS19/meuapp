@@ -1,14 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Link } from 'expo-router';
+import { View, Text, StyleSheet } from 'react-native';
 
-const Header = ({ link, header }) => {
+const Header = ({ }) => {
     return (
         <View style={styles.container}>
-            <Link href={link}>
-                <Image style={styles.image} source={require('../assets/arrow.png')} />
-            </Link>
-            <Text style={styles.text}>{header}</Text>
+            <Text style={styles.text}>iFome</Text>
         </View>
     );
 };
@@ -23,14 +19,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         height: 50
     },
-    image: {
-        width: 30,
-        height: 30,
-    },
     text: {
         fontSize: 20,
-        fontWeight: 'bold',
-        color: '#fff',
+        color: 'white',
     },
 });
 

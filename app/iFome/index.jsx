@@ -1,132 +1,79 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, ScrollView, FlatList } from 'react-native';
-import { AppContext } from '../../scripts/AppContext';
+import { View, Text, Image, StyleSheet, Pressable, SafeAreaView, FlatList, ScrollView } from 'react-native';
 import Header from './components/header';
-import { Link } from 'expo-router';
 
-const Item = ({ nome, local, preco, img, id }) => {
-    const { carrinho, setCarrinho } = useContext(AppContext);
+const style = StyleSheet.create({
+    tinyLogo: {
+        width: 100,
+        height: 100,
+      },
 
-    const adicionar = () => {
-        setCarrinho([...carrinho, { id, nome, local, preco }]);
-    };
+})
 
-    return (
-        <View style={styles.itemContainer}>
-            <Image source={{ uri: img }} style={styles.img} />
-            <View style={styles.itemDetails}>
-                <Text style={styles.nome}>{nome}</Text>
-                <Text style={styles.local}>{local}</Text>
-                <Text style={styles.preco}>R$ {preco}</Text>
-                <Pressable style={styles.buy} onPress={adicionar}>
-                    <Text style={styles.buyTxt}>Adicionar ao carrinho</Text>
-                </Pressable>
-            </View>
-        </View>
-    );
-};
+const produto = [
+    {
+      id: '1',
+      name: 'Frango com Catupiry',
+      local: 'Mini Kalzone',
+      price: 'R$10,00',
+      img: 'https://admin.minikalzone.com.br/uploads/product/5/66aa85eda9dc62.40762053.png',
 
-const App = () => {
-    const { lanches, carrinho } = useContext(AppContext);
+    },
+    {
+      id: '2',
+      name: 'Frango',
+      local: 'Mini Kalzone',
+      price: 'R$8,50',
+      img: 'https://admin.minikalzone.com.br/uploads/product/9/66aa8788e6e364.81572054.png',
+    },
+    {
+        id: '3',
+        name: 'Brócolis',
+        local: 'Mini Kalzone',
+        price: 'R$9,50',
+        img: 'https://admin.minikalzone.com.br/uploads/product/14/66aa8874810357.20807074.png',
+    },
+    {
+        id: '4',
+        name: 'Galak',
+        local: 'Mini Kalzone',
+        price: 'R$7,50',
+        img: 'https://admin.minikalzone.com.br/uploads/product/51/66aa840b3168c2.56138611.png',
+      },
 
-    return (
-        <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <Header link='../' header='iFome' />
-                <View style={styles.cartArea}>
-                    <Image source={require('./assets/cart.png')} style={styles.cartImg} />
-                    <Text style={styles.txtCart}>{carrinho.length} itens</Text>
-                    {carrinho.length > 0 && (
-                        <Link href='./cart' style={styles.link}>
-                            <Text>Carrinho</Text>
-                        </Link>
-                    )}
-                </View>
-            </View>
-            <View style={styles.carts}>
-                <FlatList
-                    data={lanches}
-                    renderItem={({ item }) => (
-                        <Item {...item} />
-                    )}
-                    keyExtractor={item => item.id.toString()}
-                />
-            </View>
+  ];
+  const Item = ({name, local, price, img}) => {
+    console.log(img)
+    return(
+    <View style={style.item}>
+      <Text style={style.name}>{name}</Text>
+      <Text style={style.name}>{local}</Text>
+      <Text style={style.name}>{price}</Text>
+      <Image
+        style={style.tinyLogo}
+        source={{
+          uri: img,
+        }}
+      />
+      <Pressable style={style.button}>
+    <Text>Comprar</Text>
+      </Pressable>
+    </View>
+    )};
+
+export default compras = () => {
+
+    return(
+        <ScrollView style = {style.View}>
+            <Header/>
+  <SafeAreaView style={style.container}>
+      <FlatList
+        data={produto}
+        renderItem={({item}) => <Item name={item.name} local={item.local} price={item.price} img={item.img} />}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
         </ScrollView>
-    );
-};
+    )
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    header: {
-        marginBottom: 20,
-    },
-    cartArea: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 20,
-    },
-    txtCart: {
-        marginRight: 20,
-    },
-    carts: {
-        padding: 10
-    },
-    link: {
-        backgroundColor: '#ff0000',
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 5,
-        color: '#fff',
-    },
-    itemContainer: {
-        flexDirection: 'row',
-        marginBottom: 20,
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 10,
-        padding: 20,
-    },
-    img: {
-        width: 150,
-        height: 150,
-        marginRight: 20,
-    },
-    itemDetails: {
-        flex: 1,
-    },
-    nome: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    local: {
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    preco: {
-        fontSize: 16,
-        color: '#000',
-        marginBottom: 10,
-        fontWeight: 'bold',
-    },
-    buy: {
-        backgroundColor: '#ff0000',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    buyTxt: {
-        color: '#fff',
-    },
-    cartImg: {
-        width: 30,
-        height: 30,
-        marginRight: 20,
-    },
-});
-
-export default App;
+}
