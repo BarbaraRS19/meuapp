@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
-import { Image, StyleSheet, Text, View, Button, Pressable } from 'react-native';
+import { Image, StyleSheet, Text, View, Button, Pressable, SafeAreaView, Linking } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function Camera() {
     
@@ -10,6 +11,8 @@ export default function Camera() {
     const cameraRef = useRef(null)
     const [ladoCamera, setLadoCamera] = useState('back')
     const [permissaoSalvar, pedirPermissaoSalvar] = MediaLibrary.usePermissions()
+    const [scanned, setScanned] = useState(false);
+    const [scanner, setScanner] = useState(false);
 
     if (!permissao) {
         return <View/>;
@@ -48,62 +51,104 @@ export default function Camera() {
       setFoto(null)
     }
 
+    const escaneia = async ({ data }) => {
+      setScanned(true);
+      await Linking.openURL(data);
+      setScanned(false);
+  };
+
         return (
           <View style={style.container}>
-          {
-            foto ?
-            <View style={style.container}>
-            <Pressable 
-            title='descartar imagem' 
-            onPress={() => setFoto(null)}>
-            <Text style={style.text}>Descartar</Text>
-            </Pressable>
+    {foto ? (
+      <SafeAreaView style={style.Viewcontainer}>
+        <View style={style.ViewFoto}>
 
-            <Pressable 
-            title='salvar imagem' 
-            onPress={salvarFoto}>
-            <Text style={style.text}>Salvar</Text>
-            </Pressable>
-
-            <Image style={style.img} source={{uri: foto.uri}}/> 
+       
+        <Image style={style.image} source={{ uri: foto.uri }} />
+        <View style={style.viewButton}>
+        <Pressable onPress={tirarFoto}>
+                <Image style={style.icon} source={require('./image/circulo-preto.png')} />
+              </Pressable>
+              <Pressable title="Salvar Foto" onPress={salvarFoto}>
+                <Image style={style.icon} source={require('./image/baixar-seta.png')} />
+              </Pressable>
+              <Pressable title="Descartar imagem" onPress={() => setFoto(null)}>
+                <Image style={style.icon} source={require('./image/lixeira.png')} />
+              </Pressable>
+           
+        </View>
+        </View>
+      </SafeAreaView>
+    ) : (
+      <View>
+        {scanner ? (
+          <View style={style.camera}>
+           <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : escaneia}
+            style={StyleSheet.absoluteFillObject}
+          />
+            <View style={style.cambtn}>
+              <Pressable style={style.button} onPress={() => setScanner(!scanner)}>
+              </Pressable>
             </View>
-            
-            
-            :
-        <CameraView style={style.camera} facing={ladoCamera} ref={cameraRef}
-        barcodeScannerSettings={{
-        barcodeTypes: ["qr"],
-        }}>
-        <View style={style.container2}>
-          <Pressable title='tirar foto' onPress={tirarFoto} style={style.pres}><Text style={style.text}>Tirar</Text></Pressable>
-          <Pressable title='troca lado' onPress={inverterLadoCamera} style={style.pres}><Text style={style.text}>Inverter</Text></Pressable>
-        </View>
-        </CameraView>
-          }
-        </View>
-          );
-    }
+          </View>
+        ) : (
+          <CameraView style={style.camera} ref={cameraRef} facing={ladoCamera}>
+            <View style={style.cameraContainer}>
+              <Pressable onPress={tirarFoto}>
+                <Image style={style.icon} source={require('./image/circulo-preto.png')} />
+              </Pressable>
+              
+              <Pressable style={style.button} onPress={() => setScanner(!scanner)}>
+                <Image style={style.icon} source={require('./image/codigo-de-barras.png')} />
+              </Pressable>
+              <Pressable onPress={inverterLadoCamera}>
+                <Image style={style.icon} source={require('./image/flecha.png')} />
+              </Pressable>
+            </View>
+          </CameraView>
+        )}
+      </View>
+    )}
+  </View>
+);
+}
 
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-textopemissao: {
-    textAlign: 'center',
-  },
-camera: {
-    flex: 1,
-  },
-buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
-  },
-img: {
-    width: '100%',
-    height: '100%',
-},
 
-})
+  container:{
+    flex: 1
+  },
+    Viewcontainer:{
+      flex: 1,
+     
+    },
+    ViewFoto:{
+      flex: 1,
+      
+    },
+    image:{
+      width: "100%",
+      height: "100%",
+    },
+    camera:{
+      width: "100%",
+      height: "100%",
+    },
+      cameraContainer:{
+        flex: 1,
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+      },
+      icon:{
+        width: 55,
+        height: 55
+      },
+      viewButton:{
+        flex: 1,
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+      }
+  });
