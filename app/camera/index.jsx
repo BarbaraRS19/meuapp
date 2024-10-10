@@ -44,7 +44,7 @@ export default function Camera() {
     }
 
     const salvarFoto = async () => {
-      if(permissaoSalvar.status == 'granted'){
+      if(permissaoSalvar.status !== 'granted'){
         await pedirPermissaoSalvar()
       } 
       MediaLibrary.saveToLibraryAsync(foto.uri)
@@ -60,50 +60,44 @@ export default function Camera() {
         return (
           <View style={style.container}>
     {foto ? (
-      <SafeAreaView style={style.Viewcontainer}>
-        <View style={style.ViewFoto}>
-
-       
-        <Image style={style.image} source={{ uri: foto.uri }} />
-        <View style={style.viewButton}>
-        <Pressable onPress={tirarFoto}>
-                <Image style={style.icon} source={require('./image/circulo-preto.png')} />
+        <View style={style.container}>
+        <Image style={style.img} source={{ uri: foto.uri }} />
+        <View style={style.view}>
+              <Pressable onPress={tirarFoto}>
+                <Image style={style.botao} source={require('./image/circulo-preto.png')} />
               </Pressable>
-              <Pressable title="Salvar Foto" onPress={salvarFoto}>
-                <Image style={style.icon} source={require('./image/baixar-seta.png')} />
+              <Pressable title="Salvar" onPress={salvarFoto}>
+                <Image style={style.botao2} source={require('./image/baixar-seta.png')} />
               </Pressable>
-              <Pressable title="Descartar imagem" onPress={() => setFoto(null)}>
-                <Image style={style.icon} source={require('./image/lixeira.png')} />
+              <Pressable title="Deletar" onPress={() => setFoto(null)}>
+                <Image style={style.botao2} source={require('./image/lixeira.png')} />
               </Pressable>
-           
         </View>
         </View>
-      </SafeAreaView>
     ) : (
-      <View>
+      <View style={style.container}>
         {scanner ? (
-          <View style={style.camera}>
+          <View style={style.img}>
            <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : escaneia}
             style={StyleSheet.absoluteFillObject}
           />
-            <View style={style.cambtn}>
-              <Pressable style={style.button} onPress={() => setScanner(!scanner)}>
+            <View>
+              <Pressable onPress={() => setScanner(!scanner)}>
               </Pressable>
             </View>
           </View>
         ) : (
-          <CameraView style={style.camera} ref={cameraRef} facing={ladoCamera}>
-            <View style={style.cameraContainer}>
-              <Pressable onPress={tirarFoto}>
-                <Image style={style.icon} source={require('./image/circulo-preto.png')} />
+          <CameraView style={style.img} ref={cameraRef} facing={ladoCamera}>
+            <View style={style.cam}>
+              <Pressable onPress={() => setScanner(!scanner)}>
+                <Image style={style.botao} source={require('./image/codigo-de-barras.png')} />
               </Pressable>
-              
-              <Pressable style={style.button} onPress={() => setScanner(!scanner)}>
-                <Image style={style.icon} source={require('./image/codigo-de-barras.png')} />
+              <Pressable onPress={tirarFoto}>
+                <Image style={style.botao} source={require('./image/circulo-preto.png')} />
               </Pressable>
               <Pressable onPress={inverterLadoCamera}>
-                <Image style={style.icon} source={require('./image/flecha.png')} />
+                <Image style={style.botao} source={require('./image/flecha.png')} />
               </Pressable>
             </View>
           </CameraView>
@@ -115,40 +109,34 @@ export default function Camera() {
 }
 
 const style = StyleSheet.create({
-
   container:{
     flex: 1
   },
-    Viewcontainer:{
-      flex: 1,
-     
-    },
-    ViewFoto:{
-      flex: 1,
-      
-    },
-    image:{
+    img:{
       width: "100%",
       height: "100%",
     },
-    camera:{
-      width: "100%",
-      height: "100%",
+    view:{
+      flex: 1,
+      alignItems: 'flex-end',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly'
     },
-      cameraContainer:{
+      cam:{
         flex: 1,
+        justifyContent: 'space-around',
         alignItems: 'flex-end',
         flexDirection: 'row',
-        justifyContent: 'space-around'
       },
-      icon:{
-        width: 55,
-        height: 55
+      botao:{
+        width: 60,
+        height: 60,
+        marginBottom: 20,
       },
-      viewButton:{
-        flex: 1,
-        alignItems: 'flex-end',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly'
+      botao2: {
+        width: 60,
+        height: 60,
+        marginBottom: 20,
+        marginLeft: 60,
       }
   });
