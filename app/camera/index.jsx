@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
-import { Image, StyleSheet, Text, View, Button } from 'react-native';
+import { Image, StyleSheet, Text, View, Button, Pressable } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function Camera() {
     
@@ -19,8 +18,9 @@ export default function Camera() {
     if(!permissao.granted){
         return(
         <View style={style.container}>
-        <Text style={style.textopemissao}>Você precisa da permissão para utilizar a câmera!</Text>
+        <Text style={style.texto}>Você precisa da permissão para utilizar a câmera!</Text>
         <Button 
+        style={style.butt}
         onPress={pedirPermissao} 
         title="pedir permissão" />
         </View>
@@ -49,22 +49,34 @@ export default function Camera() {
     }
 
         return (
-          <View style={style.view}>
+          <View style={style.container}>
           {
             foto ?
-            <View style={style.view}>
-            <Button title='descartar imagem' onPress={() => setFoto(null)}/>
-            <Button title='salvar imagem' onPress={salvarFoto}/>
+            <View style={style.container}>
+            <Pressable 
+            title='descartar imagem' 
+            onPress={() => setFoto(null)}>
+            <Text style={style.text}>Descartar</Text>
+            </Pressable>
+
+            <Pressable 
+            title='salvar imagem' 
+            onPress={salvarFoto}>
+            <Text style={style.text}>Salvar</Text>
+            </Pressable>
+
             <Image style={style.img} source={{uri: foto.uri}}/> 
             </View>
+            
+            
             :
         <CameraView style={style.camera} facing={ladoCamera} ref={cameraRef}
         barcodeScannerSettings={{
         barcodeTypes: ["qr"],
         }}>
-        <View style={style.buttonContainer}>
-          <Button title='tirar foto' onPress={tirarFoto}/>
-          <Button title='troca lado' onPress={inverterLadoCamera}></Button>
+        <View style={style.container2}>
+          <Pressable title='tirar foto' onPress={tirarFoto} style={style.pres}><Text style={style.text}>Tirar</Text></Pressable>
+          <Pressable title='troca lado' onPress={inverterLadoCamera} style={style.pres}><Text style={style.text}>Inverter</Text></Pressable>
         </View>
         </CameraView>
           }
@@ -73,24 +85,25 @@ export default function Camera() {
     }
 
 const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-      },
-    textopemissao: {
-        textAlign: 'center',
-      },
-    camera: {
-        flex: 1,
-      },
-    buttonContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'transparent',
-        margin: 64,
-      },
-    img: {
-        width: '100%',
-        height: '100%',
-    },
-  });
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+textopemissao: {
+    textAlign: 'center',
+  },
+camera: {
+    flex: 1,
+  },
+buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    margin: 64,
+  },
+img: {
+    width: '100%',
+    height: '100%',
+},
+
+})

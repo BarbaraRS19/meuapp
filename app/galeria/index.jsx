@@ -37,3 +37,4 @@ const style = StyleSheet.create({
       height: 200,
     },
   });
+

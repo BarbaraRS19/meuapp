@@ -45,5 +45,6 @@ export default listaExercicio = () => {
     <Link style={styles.link} href="/iFome"> -iFome </Link>
     <Link style={styles.link} href="/galeria"> -Galeria </Link>
     <Link style={styles.link} href="/camera"> -Câmera </Link>
+    <Link style={styles.link} href="/memoria"> -Memórias </Link>
     </View>
 }
