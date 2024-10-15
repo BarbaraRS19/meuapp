@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const Cabecalho = ({ titulo }) => {
   return (
     <View style={styles.cabecalho}>
-      <Text style={styles.title}>{titulo}</Text>   
+      <Text style={styles.title}>{titulo}</Text>
     </View>
   );
 };
