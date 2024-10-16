@@ -21,6 +21,7 @@ title: {
   display: 'flex',
   justifyContent: 'center',
   textAlign: 'center',
-  marginTop: 10, 
+  marginTop: 40, 
+  marginBottom: 20,
 }
   });
